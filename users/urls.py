@@ -29,7 +29,9 @@ urlpatterns = [
         name="token_refresh",
     ),
     path("", CustomUserListAPIView.as_view(), name="user_list"),
-    path("retrieve/<int:pk>/", CustomUserRetrieveAPIView.as_view(), name="user_retrieve"),
+    path(
+        "retrieve/<int:pk>/", CustomUserRetrieveAPIView.as_view(), name="user_retrieve"
+    ),
     path("delete/<int:pk>/", CustomUserDestroyAPIView.as_view(), name="user_delete"),
     path("update/<int:pk>/", CustomUserUpdateAPIView.as_view(), name="user_update"),
-    ]
+]

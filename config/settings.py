@@ -84,7 +84,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
-        'users.permissions.IsActivePermission', # только для активных(is_active=True) пользователей
+        "users.permissions.IsActivePermission",  # только для активных(is_active=True) пользователей
     ],
 }
 # AllowAny

@@ -1,12 +1,15 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, generics, status
-from rest_framework.response import Response
+from rest_framework import viewsets, generics
+
 
 from .models import Contact, Product, Organization
-from .serializers import ContactSerializer, ProductSerializer, OrganizationSerializer, OrganizationUpdateSerializer
+from .serializers import (
+    ContactSerializer,
+    ProductSerializer,
+    OrganizationSerializer,
+    OrganizationUpdateSerializer,
+)
 from rest_framework.filters import OrderingFilter
-from rest_framework.exceptions import ValidationError
-
 
 
 class ContactViewSet(viewsets.ModelViewSet):
@@ -43,14 +46,3 @@ class OrganizationRetrieve(generics.RetrieveAPIView):
 
 class OrganizationDestroy(generics.DestroyAPIView):
     queryset = Organization.objects.all()
-
-
-
-
-
-
-
-
-
-
-
