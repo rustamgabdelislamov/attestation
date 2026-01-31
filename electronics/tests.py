@@ -150,12 +150,26 @@ class OrganizationTestCase(APITestCase):
     def setUp(self):
         """Тест CRUD для модели Organization если у пользователя is_active=True"""
         self.user = CustomUser.objects.create(email="test@mail.ru", password=1990)
-        self.contact = Contact.objects.create(
+        self.contact1 = Contact.objects.create(
             email="hrustam911@mail.ru",
             country="Россия",
             city="Дюртюли",
             street="Ленина",
             house_number=40
+        )
+        self.contact2 = Contact.objects.create(
+            email="example@mail.ru",
+            country="Россия",
+            city="Казань",
+            street="Пушкина",
+            house_number=10
+        )
+        self.contact3 = Contact.objects.create(
+            email="le@mail.ru",
+            country="Россия",
+            city="Казань",
+            street="Пушкина",
+            house_number=10
         )
         self.product = Product.objects.create(
             name="Test",
@@ -164,17 +178,18 @@ class OrganizationTestCase(APITestCase):
         )
         self.organization1 = Organization.objects.create(
             name="Factory",
-        contact=self.contact,
-        products=self.product
+            contact=self.contact1,
+            debt_to_supplier=0
         )
-
+        self.organization1.products.add(self.product) # Поле products является полем "многие ко многим",
+        # и его нельзя присваивать напрямую
         self.organization2 = Organization.objects.create(
             name="Company",
-            contact=self.contact,
-            products=self.product,
+            contact=self.contact2,
             supplier=self.organization1,
             debt_to_supplier=10000
         )
+        self.organization2.products.add(self.product)
         self.client.force_authenticate(user=self.user)
 
 
@@ -186,47 +201,70 @@ class OrganizationTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data.get("name"), self.organization1.name)
 
-    def test_contact_create(self):
-        url = reverse("electronics:contacts-list")
+    def test_organization_create(self):
+        url = reverse("electronics:org_create")
         data = {
-            "email": "911@mail.ru",
-            "country": "Россия",
-            "city": "Дюртюли",
-            "street": "Ленина",
-            "house_number": 40
+            "name": "Test",
+            "contact": self.contact3.id,
+            "products": [self.product.id],
+            "supplier": self.organization1.id,
+            "debt_to_supplier": 12000
         }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Contact.objects.all().count(), 2)
+        self.assertEqual(Organization.objects.all().count(), 3)
 
-    def test_contact_update(self):
-        url = reverse("electronics:contacts-detail", args=(self.contact.id,))
+
+    def test_organization1_update(self):
+        """Обновляем разрешенное поле"""
+        url = reverse("electronics:org_update", args=(self.organization1.id,))
         data = {
-            "city": "Уфа",
+            "name": "Test2",
         }
         response = self.client.patch(url, data)
         data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(data.get("city"), "Уфа")
+        self.assertEqual(data.get("name"), "Test2")
 
-    def test_contact_delete(self):
-        url = reverse("electronics:contacts-detail", args=(self.contact.id,))
+    def test_organization1_update_debt(self):
+        """Обновляем запрещенное поле debt_to_supplier"""
+        url = reverse("electronics:org_update", args=(self.organization1.id,))
+        data = {
+            "debt_to_supplier": 12000,
+        }
+        response = self.client.patch(url, data)
+        data = response.json()
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['debt_to_supplier'], ["Обновление этого поля запрещено"]
+        )
+
+
+    def test_organization1_delete(self):
+        url = reverse("electronics:org_delete", args=(self.organization1.id,))
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Contact.objects.all().count(), 0)
+        self.assertEqual(Organization.objects.all().count(), 1)
 
-    def test_contact_list(self):
-        url = reverse("electronics:contacts-list")
+    def test_organization_list(self):
+        url = reverse("electronics:org_list")
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.json()
         result = [
     {
-        "id": 1,
-        "email": "hrustam911@mail.ru",
-        "country": "Россия",
-        "city": "Дюртюли",
-        "street": "Ленина",
-        "house_number": "40"
-    }]
+        "name": "Factory",
+        "contact": self.contact1.id,
+        "supplier": None,
+        "products": [self.product.id],
+        "debt_to_supplier": "0.00",
+        "hierarchy_level": 0
+    },
+    {
+        "name": "Company",
+        "contact": self.contact2.id,
+        "supplier": self.organization1.id,
+        "products": [self.product.id],
+        "debt_to_supplier": "10000.00",
+        "hierarchy_level": 1
+    },]
         self.assertEqual(data, result)

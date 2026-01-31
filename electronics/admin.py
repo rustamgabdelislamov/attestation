@@ -24,12 +24,7 @@ class OrganizationAdmin(admin.ModelAdmin):
     clear_debts.short_description = "Очистить задолженность"
 
     def hierarchy_level(self, obj):
-        level = 0
-        current_obj = obj
-        while current_obj.supplier is not None:
-            current_obj = current_obj.supplier
-            level += 1
-        return level
+        return obj.get_hierarchy_level()
 
     hierarchy_level.short_description = "Уровень иерархии"
 

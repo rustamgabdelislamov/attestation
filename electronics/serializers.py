@@ -19,10 +19,14 @@ class OrganizationSerializer(serializers.ModelSerializer):
     products = serializers.PrimaryKeyRelatedField(
         queryset=Product.objects.all(), many=True
     )
+    hierarchy_level = serializers.SerializerMethodField()
 
     class Meta:
         model = Organization
-        fields = ["name", "contact", "supplier", "products", "debt_to_supplier"]
+        fields = ["name", "contact", "supplier", "products", "debt_to_supplier", "hierarchy_level"]
+
+    def get_hierarchy_level(self, obj):
+        return obj.get_hierarchy_level()
 
 
 class OrganizationUpdateSerializer(serializers.ModelSerializer):

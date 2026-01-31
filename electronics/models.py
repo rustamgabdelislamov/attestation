@@ -37,5 +37,13 @@ class Organization(models.Model):
     debt_to_supplier = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_hierarchy_level(self):
+        level = 0
+        current_obj = self
+        while current_obj.supplier is not None:
+            current_obj = current_obj.supplier
+            level += 1
+        return level
+
     def __str__(self):
         return self.name
