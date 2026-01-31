@@ -148,7 +148,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/electronics/contacts/9/",
+					"raw": "http://127.0.0.1:8000/electronics/contacts/",
 					"protocol": "http",
 					"host": [
 						"127",
