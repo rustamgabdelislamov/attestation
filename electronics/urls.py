@@ -16,8 +16,8 @@ from users.apps import UsersConfig
 app_name = UsersConfig.name
 
 router = routers.DefaultRouter()
-router.register(r"contacts", ContactViewSet)
-router.register(r"products", ProductViewSet)
+router.register(r"contacts", ContactViewSet, basename="contacts")
+router.register(r"products", ProductViewSet, basename="products")
 
 urlpatterns = [
     path("", include(router.urls)),
