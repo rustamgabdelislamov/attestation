@@ -8,12 +8,16 @@ class Contact(models.Model):
     street = models.CharField(max_length=255, verbose_name="Улица")
     house_number = models.CharField(max_length=10, verbose_name="Дом")
 
+    def __str__(self):
+        return self.email
 
 class Product(models.Model):
     name = models.CharField(max_length=255, verbose_name="Имя")
     model = models.CharField(max_length=255, verbose_name="Модель")
     release_date = models.DateField(verbose_name="Дата выхода продукта на рынок")
 
+    def __str__(self):
+        return self.name
 
 class Organization(models.Model):
     name = models.CharField(max_length=255)
