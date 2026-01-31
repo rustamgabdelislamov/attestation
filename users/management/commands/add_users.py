@@ -3,9 +3,9 @@ from django.core.management import BaseCommand
 from electronics.models import Contact, Product, Organization
 from users.models import CustomUser
 
+
 # help = "Создаем 3 пользователей и реферальные ссылки"
 class Command(BaseCommand):
-
 
     def handle(self, *args, **options):
         users = []
@@ -14,7 +14,6 @@ class Command(BaseCommand):
             {
                 "email": "fact@mail.ru",
                 "password": "password123",
-
             },
             {"email": "com@mail.ru", "password": "password123", "is_active": False},
         ]

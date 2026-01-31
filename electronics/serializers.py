@@ -23,7 +23,14 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Organization
-        fields = ["name", "contact", "supplier", "products", "debt_to_supplier", "hierarchy_level"]
+        fields = [
+            "name",
+            "contact",
+            "supplier",
+            "products",
+            "debt_to_supplier",
+            "hierarchy_level",
+        ]
 
     def get_hierarchy_level(self, obj):
         return obj.get_hierarchy_level()

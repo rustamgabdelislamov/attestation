@@ -15,13 +15,14 @@ class ContactTestCase(APITestCase):
             country="Россия",
             city="Дюртюли",
             street="Ленина",
-            house_number=40
+            house_number=40,
         )
         self.client.force_authenticate(user=self.user)
 
-
     def test_contact_retrieve(self):
-        url = reverse("electronics:contacts-detail", args=[self.contact.id])  # Используйте имя URL, сгенерированное router
+        url = reverse(
+            "electronics:contacts-detail", args=[self.contact.id]
+        )  # Используйте имя URL, сгенерированное router
         response = self.client.get(url)
         data = response.json()
 
@@ -35,7 +36,7 @@ class ContactTestCase(APITestCase):
             "country": "Россия",
             "city": "Дюртюли",
             "street": "Ленина",
-            "house_number": 40
+            "house_number": 40,
         }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -63,19 +64,22 @@ class ContactTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.json()
         result = [
-    {
-        "id": 1,
-        "email": "hrustam911@mail.ru",
-        "country": "Россия",
-        "city": "Дюртюли",
-        "street": "Ленина",
-        "house_number": "40"
-    }]
+            {
+                "id": 1,
+                "email": "hrustam911@mail.ru",
+                "country": "Россия",
+                "city": "Дюртюли",
+                "street": "Ленина",
+                "house_number": "40",
+            }
+        ]
         self.assertEqual(data, result)
 
     def test_is_active_false(self):
         """Тест когда у пользователя is_active=False его не пустит к API"""
-        self.false_user = CustomUser.objects.create(email="false@mail.ru", password="password", is_active=False)
+        self.false_user = CustomUser.objects.create(
+            email="false@mail.ru", password="password", is_active=False
+        )
         self.client.force_authenticate(user=self.false_user)
         url = reverse("electronics:contacts-detail", args=[self.contact.id])
         response = self.client.get(url)
@@ -89,15 +93,14 @@ class ProductTestCase(APITestCase):
         """Тест CRUD для модели Product если у пользователя is_active=True"""
         self.user = CustomUser.objects.create(email="test@mail.ru", password=1990)
         self.product = Product.objects.create(
-            name="Test",
-            model="Test",
-            release_date="2026-01-31"
+            name="Test", model="Test", release_date="2026-01-31"
         )
         self.client.force_authenticate(user=self.user)
 
-
     def test_product_retrieve(self):
-        url = reverse("electronics:products-detail", args=[self.product.id])  # Используйте имя URL, сгенерированное router
+        url = reverse(
+            "electronics:products-detail", args=[self.product.id]
+        )  # Используйте имя URL, сгенерированное router
         response = self.client.get(url)
         data = response.json()
 
@@ -106,11 +109,7 @@ class ProductTestCase(APITestCase):
 
     def test_product_create(self):
         url = reverse("electronics:products-list")
-        data = {
-            "name": "Test2",
-            "model": "Test2",
-            "release_date": "2026-01-31"
-        }
+        data = {"name": "Test2", "model": "Test2", "release_date": "2026-01-31"}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Product.objects.all().count(), 2)
@@ -137,13 +136,10 @@ class ProductTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.json()
         result = [
-    {
-        "id": 1,
-        "name": "Test",
-        "model": "Test",
-        "release_date": "2026-01-31"
-    }]
+            {"id": 1, "name": "Test", "model": "Test", "release_date": "2026-01-31"}
+        ]
         self.assertEqual(data, result)
+
 
 class OrganizationTestCase(APITestCase):
 
@@ -155,46 +151,45 @@ class OrganizationTestCase(APITestCase):
             country="Россия",
             city="Дюртюли",
             street="Ленина",
-            house_number=40
+            house_number=40,
         )
         self.contact2 = Contact.objects.create(
             email="example@mail.ru",
             country="Россия",
             city="Казань",
             street="Пушкина",
-            house_number=10
+            house_number=10,
         )
         self.contact3 = Contact.objects.create(
             email="le@mail.ru",
             country="Россия",
             city="Казань",
             street="Пушкина",
-            house_number=10
+            house_number=10,
         )
         self.product = Product.objects.create(
-            name="Test",
-            model="Test",
-            release_date="2026-01-31"
+            name="Test", model="Test", release_date="2026-01-31"
         )
         self.organization1 = Organization.objects.create(
-            name="Factory",
-            contact=self.contact1,
-            debt_to_supplier=0
+            name="Factory", contact=self.contact1, debt_to_supplier=0
         )
-        self.organization1.products.add(self.product) # Поле products является полем "многие ко многим",
+        self.organization1.products.add(
+            self.product
+        )  # Поле products является полем "многие ко многим",
         # и его нельзя присваивать напрямую
         self.organization2 = Organization.objects.create(
             name="Company",
             contact=self.contact2,
             supplier=self.organization1,
-            debt_to_supplier=10000
+            debt_to_supplier=10000,
         )
         self.organization2.products.add(self.product)
         self.client.force_authenticate(user=self.user)
 
-
     def test_organization1_retrieve(self):
-        url = reverse("electronics:org_retrieve", args=[self.organization1.id])  # Используйте имя URL, сгенерированное router
+        url = reverse(
+            "electronics:org_retrieve", args=[self.organization1.id]
+        )  # Используйте имя URL, сгенерированное router
         response = self.client.get(url)
         data = response.json()
 
@@ -208,12 +203,11 @@ class OrganizationTestCase(APITestCase):
             "contact": self.contact3.id,
             "products": [self.product.id],
             "supplier": self.organization1.id,
-            "debt_to_supplier": 12000
+            "debt_to_supplier": 12000,
         }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Organization.objects.all().count(), 3)
-
 
     def test_organization1_update(self):
         """Обновляем разрешенное поле"""
@@ -235,9 +229,9 @@ class OrganizationTestCase(APITestCase):
         response = self.client.patch(url, data)
         data = response.json()
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data['debt_to_supplier'], ["Обновление этого поля запрещено"]
+        self.assertEqual(
+            response.data["debt_to_supplier"], ["Обновление этого поля запрещено"]
         )
-
 
     def test_organization1_delete(self):
         url = reverse("electronics:org_delete", args=(self.organization1.id,))
@@ -251,20 +245,21 @@ class OrganizationTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.json()
         result = [
-    {
-        "name": "Factory",
-        "contact": self.contact1.id,
-        "supplier": None,
-        "products": [self.product.id],
-        "debt_to_supplier": "0.00",
-        "hierarchy_level": 0
-    },
-    {
-        "name": "Company",
-        "contact": self.contact2.id,
-        "supplier": self.organization1.id,
-        "products": [self.product.id],
-        "debt_to_supplier": "10000.00",
-        "hierarchy_level": 1
-    },]
+            {
+                "name": "Factory",
+                "contact": self.contact1.id,
+                "supplier": None,
+                "products": [self.product.id],
+                "debt_to_supplier": "0.00",
+                "hierarchy_level": 0,
+            },
+            {
+                "name": "Company",
+                "contact": self.contact2.id,
+                "supplier": self.organization1.id,
+                "products": [self.product.id],
+                "debt_to_supplier": "10000.00",
+                "hierarchy_level": 1,
+            },
+        ]
         self.assertEqual(data, result)

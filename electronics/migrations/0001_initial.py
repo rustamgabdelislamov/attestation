@@ -85,7 +85,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         blank=True,
                         help_text="Введите поставщика. Если поставщик не указан, данная организация автоматически "
-                                  "считается заводом.",
+                        "считается заводом.",
                         null=True,
                         on_delete=django.db.models.deletion.SET_NULL,
                         related_name="customers",
