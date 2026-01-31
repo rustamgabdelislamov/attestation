@@ -1,0 +1,449 @@
+{
+	"info": {
+		"_postman_id": "9fb10af0-e406-4c00-943b-25795d62c5a7",
+		"name": "attestation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49552542"
+	},
+	"item": [
+		{
+			"name": "регистрируем пользователя",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"hrustam911@mail.ru\",\r\n    \"password\": 1990\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/users/register/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получаем токен",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"phone_number\": \"89871371048\",\r\n    \"password\": 1990\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/login/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "детали пользователя",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY5NjU5NjY0LCJpYXQiOjE3Njk2NTg3NjQsImp0aSI6ImQzMDIxZTQ2MzE4NzQ0OTc5OWUwODNhYTcxZGU2MzE1IiwidXNlcl9pZCI6IjMifQ.F9ecISiZ6s6ADiodoBGT8WmWKzKdpUv_p-ZDwyOzuAE",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/retrieve/1/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"retrieve",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "все пользователи",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY5NjU5NjY0LCJpYXQiOjE3Njk2NTg3NjQsImp0aSI6ImQzMDIxZTQ2MzE4NzQ0OTc5OWUwODNhYTcxZGU2MzE1IiwidXNlcl9pZCI6IjMifQ.F9ecISiZ6s6ADiodoBGT8WmWKzKdpUv_p-ZDwyOzuAE",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создаем контакт",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY5NzUyMTIxLCJpYXQiOjE3Njk3NTEyMjEsImp0aSI6IjkxNmNjNDA5NDI4ODQwMDE4MWEyZWVmMDgyNDdiYTZiIiwidXNlcl9pZCI6IjMifQ.8xPkETxX2l9ZPPKBpCH9dTue2HcegXzJlyEhYjTQJmg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n                \"email\": \"1@mail.ru\",\r\n                \"country\": \"Russia\",\r\n                \"city\": \"Ufa\",\r\n                \"street\": \"USSR\",\r\n                \"house_number\": \"70\"\r\n            }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/electronics/contacts/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"electronics",
+						"contacts",
+						"9",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "удаляем контакт по ID",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY5NzUyMTIxLCJpYXQiOjE3Njk3NTEyMjEsImp0aSI6IjkxNmNjNDA5NDI4ODQwMDE4MWEyZWVmMDgyNDdiYTZiIiwidXNlcl9pZCI6IjMifQ.8xPkETxX2l9ZPPKBpCH9dTue2HcegXzJlyEhYjTQJmg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n                \"email\": \"1@mail.ru\",\r\n                \"country\": \"Russia\",\r\n                \"city\": \"Ufa\",\r\n                \"street\": \"USSR\",\r\n                \"house_number\": \"70\"\r\n            }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/electronics/contacts/9/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"electronics",
+						"contacts",
+						"9",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создаем продукт",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY5NzY0NzI5LCJpYXQiOjE3Njk3NjM4MjksImp0aSI6ImQxMWRiOWFjNzRlYTQzNmFiYTkyNzc5MjBlNzljNWQ0IiwidXNlcl9pZCI6IjMifQ.eVGy3IyFcdNvpSNHyeZFnqAk0wbCYtnsTkOHO0k88EM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test\",\r\n    \"model\": \"126 GB\",\r\n    \"release_date\": \"2025-05-12\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/electronics/products/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"electronics",
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "удаляем продукт по ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/electronics/products/9/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"electronics",
+						"products",
+						"9",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создаем организацию",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY5ODc0NjI4LCJpYXQiOjE3Njk4NzM3MjgsImp0aSI6ImU3OTIzNWNiNTFhZDRmZDE4NmM4YjEyYTUyMjlkYmI2IiwidXNlcl9pZCI6IjMifQ.6sIivCdSni5BmyQCracY37IxE3b1ueN4U2suCbBKkPg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"222IP\",\r\n    \"contact\": 10,\r\n    \"supplier\": 9,\r\n    \"products\": [9],\r\n    \"debt_to_supplier\": 11002\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/electronics/organizations/create/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"electronics",
+						"organizations",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "обновление организации",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY5ODc1Mzc2LCJpYXQiOjE3Njk4NzQ0NzYsImp0aSI6IjhiMWMzYjU5MWY5OTRmZTdhNTRkNTllYTkzNjU4ZmU2IiwidXNlcl9pZCI6IjMifQ.5FQmS3uUMw3ARoaOhf7LQ-Uw0k_VMDjphcF2nPm2cc0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"222IP\",\r\n    \"contact\": 10,\r\n    \"supplier\": 9,\r\n    \"products\": [9]\r\n    \r\n    \r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/electronics/organizations/25/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"electronics",
+						"organizations",
+						"25",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "просмотр организации",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY5ODc1Mzc2LCJpYXQiOjE3Njk4NzQ0NzYsImp0aSI6IjhiMWMzYjU5MWY5OTRmZTdhNTRkNTllYTkzNjU4ZmU2IiwidXNlcl9pZCI6IjMifQ.5FQmS3uUMw3ARoaOhf7LQ-Uw0k_VMDjphcF2nPm2cc0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/electronics/organizations/retrieve/25/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"electronics",
+						"organizations",
+						"retrieve",
+						"25",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "удаляем организацию",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY5ODc2MzE2LCJpYXQiOjE3Njk4NzU0MTYsImp0aSI6ImM4YzU5OWU2NTZhOTQ2Y2E5MTE4YWQ4MmQzZTcwNWMyIiwidXNlcl9pZCI6IjMifQ.a6qnDSlxc_je_Nw95_oHhicejf1hFTSHJB52kfbY2pQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/electronics/organizations/delete/25/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"electronics",
+						"organizations",
+						"delete",
+						"25",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "просмотр организаций",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY5ODc2ODU1LCJpYXQiOjE3Njk4NzU5NTUsImp0aSI6Ijc5ZDUwOTI0N2U3ZDQzZWU4NjkwNWU5NjIwMWQxMGU4IiwidXNlcl9pZCI6IjYifQ.RGLagFz1Oz6z3q6PqloxjpPEbLoDvyr80D2xU0itFXo",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/electronics/organizations/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"electronics",
+						"organizations",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
